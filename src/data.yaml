@@ -129,3 +129,21 @@
   - name: 호영
     src: ho_young
 해적:
+  - name: 바이퍼
+    src: viper
+  - name: 캡틴
+    src: captain
+  - name: 캐논슈터
+    src: cannon_shooter
+  - name: 스트라이커
+    src: striker
+  - name: 메카닉
+    src: mechanic
+  - name: 제논
+    src: xenon
+  - name: 은월
+    src: eunwol
+  - name: 엔젤릭버스터
+    src: angelic_buster
+  - name: 아크
+    src: ark
