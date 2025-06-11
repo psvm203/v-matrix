@@ -36,32 +36,34 @@ fn generate_job_card(job_name: &str, image_name: &str) -> Html {
 
 #[function_component]
 fn App() -> Html {
-    let button_data = [
-        ("전사", "btn-secondary"),
-        ("마법사", "btn-info"),
-        ("궁수", "btn-accent"),
-        ("도적", "btn-primary"),
-        ("해적", "btn-neutral"),
-    ];
+    let class_button_container = {
+        let data = [
+            ("전사", "btn-secondary"),
+            ("마법사", "btn-info"),
+            ("궁수", "btn-accent"),
+            ("도적", "btn-primary"),
+            ("해적", "btn-neutral"),
+        ];
 
-    let mut buttons = vec![];
+        let mut buttons = vec![];
 
-    for &(class_name, style) in &button_data {
-        let styles = format!("btn {style}");
-        let button: Html = html! {
-            <button class={styles}>
-                {class_name}
-            </button>
-        };
-        buttons.push(button);
-    }
+        for &(class_name, style) in &data {
+            let styles = format!("btn {style}");
+            let button: Html = html! {
+                <button class={styles}>
+                    {class_name}
+                </button>
+            };
+            buttons.push(button);
+        }
 
-    let button_container = html! {
-        <div class={"flex justify-center"}>
-            <div class={"grid grid-cols-5 gap-6"}>
-                {for buttons}
+        html! {
+            <div class={"flex justify-center"}>
+                <div class={"grid grid-cols-5 gap-6"}>
+                    {for buttons}
+                </div>
             </div>
-        </div>
+        }
     };
 
     let data = include_str!("data.yaml");
@@ -83,7 +85,7 @@ fn App() -> Html {
 
     html! {
         <div class={"mt-4 grid grid-cols-1 gap-4"}>
-            {button_container}
+            {class_button_container}
             {card_container}
         </div>
     }
