@@ -23,10 +23,10 @@ fn generate_job_card(job_name: &str, image_name: &str) -> Html {
     let image_source = format!("assets/jobs/{image_name}.png");
 
     html! {
-        <div class={"card w-32 bg-base-200 border-1 items-center rounded-box overflow-hidden shadow-sm"}>
+        <div class={"card w-32 bg-base-200 border-3 items-center rounded-box overflow-hidden shadow-sm"}>
             <img class={"bg-primary"} src={image_source} />
             <div class={"card-body"}>
-                <h2 class={"card-title text-ls whitespace-nowrap h-1"}>
+                <h2 class={"card-title text-sm whitespace-nowrap h-1"}>
                     {job_name}
                 </h2>
             </div>
