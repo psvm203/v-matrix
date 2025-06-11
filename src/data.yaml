@@ -95,5 +95,19 @@
   - name: 키네시스
     src: kinesis
 궁수:
+  - name: 보우마스터
+    src: bowmaster
+  - name: 신궁
+    src: marksman
+  - name: 패스파인더
+    src: pathfinder
+  - name: 윈드브레이커
+    src: wind_breaker
+  - name: 와일드헌터
+    src: wild_hunter
+  - name: 메르세데스
+    src: mercedes
+  - name: 카인
+    src: kain
 도적:
 해적:
