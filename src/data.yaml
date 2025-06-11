@@ -74,6 +74,26 @@
   - name: 제로
     src: zero
 마법사:
+  - name: 아크메이지(불,독)
+    src: fire_poison
+  - name: 아크메이지(썬,콜)
+    src: thunder_cold
+  - name: 비숍
+    src: bishop
+  - name: 플레임위자드
+    src: flame_wizard
+  - name: 배틀메이지
+    src: battle_mage
+  - name: 에반
+    src: evan
+  - name: 루미너스
+    src: luminous
+  - name: 일리움
+    src: illium
+  - name: 라라
+    src: lara
+  - name: 키네시스
+    src: kinesis
 궁수:
 도적:
 해적:
