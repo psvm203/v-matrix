@@ -110,4 +110,22 @@
   - name: 카인
     src: kain
 도적:
+  - name: 나이트로드
+    src: night_lord
+  - name: 섀도어
+    src: shadower
+  - name: 듀얼블레이드
+    src: dual_blade
+  - name: 나이트워커
+    src: night_walker
+  - name: 제논
+    src: xenon
+  - name: 팬텀
+    src: phantom
+  - name: 카데나
+    src: cadena
+  - name: 칼리
+    src: khali
+  - name: 호영
+    src: ho_young
 해적:
