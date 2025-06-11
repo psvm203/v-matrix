@@ -38,7 +38,6 @@ fn generate_job_card(job_name: &str, image_name: &str) -> Html {
 fn App() -> Html {
     let data = include_str!("data.yaml");
     let classes: HashMap<String, Vec<Job>> = serde_yaml::from_str(data).unwrap();
-
     let mut warrior_cards = vec![];
 
     for job in &classes["전사"] {
@@ -46,15 +45,17 @@ fn App() -> Html {
         warrior_cards.push(card);
     }
 
-    let characters = html! {
-        <div class={"grid grid-cols-5 gap-4"}>
-            {for warrior_cards}
+    let card_container: Html = html! {
+        <div class={"flex justify-center"}>
+            <div class={"grid grid-cols-5 gap-4"}>
+                {for warrior_cards}
+            </div>
         </div>
     };
 
     html! {
-        <div class={"flex justify-center"}>
-            {characters}
+        <div class={"mt-4 grid grid-cols-1 gap-4"}>
+            {card_container}
         </div>
     }
 }
