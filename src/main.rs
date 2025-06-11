@@ -1,3 +1,5 @@
+#[allow(unused)]
+use gloo_console::log;
 use serde::Deserialize;
 use std::collections::HashMap;
 use yew::prelude::*;
