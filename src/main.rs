@@ -1,3 +1,4 @@
+use Class::*;
 #[allow(unused)]
 use gloo_console::log;
 use serde::Deserialize;
@@ -21,6 +22,26 @@ struct Job {
     skills: Option<Vec<Skill>>,
 }
 
+enum Class {
+    Warrior,
+    Magician,
+    Bowman,
+    Thief,
+    Pirate,
+}
+
+impl Class {
+    fn as_str(&self) -> &str {
+        match self {
+            Warrior => "전사",
+            Magician => "마법사",
+            Bowman => "궁수",
+            Thief => "도적",
+            Pirate => "해적",
+        }
+    }
+}
+
 fn generate_job_card(job_name: &str, image_name: &str) -> Html {
     let image_source = format!("assets/jobs/{image_name}.png");
 
@@ -40,47 +61,52 @@ fn generate_job_card(job_name: &str, image_name: &str) -> Html {
 fn App() -> Html {
     let class_button_container = {
         let data = [
-            ("전사", "btn-secondary"),
-            ("마법사", "btn-info"),
-            ("궁수", "btn-accent"),
-            ("도적", "btn-primary"),
-            ("해적", "btn-neutral"),
+            (Warrior.as_str(), "btn-secondary"),
+            (Magician.as_str(), "btn-info"),
+            (Bowman.as_str(), "btn-accent"),
+            (Thief.as_str(), "btn-primary"),
+            (Pirate.as_str(), "btn-neutral"),
         ];
 
-        let mut buttons = vec![];
-
-        for &(class_name, style) in &data {
-            let styles = format!("btn {style}");
-            let button: Html = html! {
-                <button class={styles}>
-                    {class_name}
-                </button>
-            };
-            buttons.push(button);
-        }
+        let class_buttons: Vec<Html> = data
+            .into_iter()
+            .map(|(class_name, style)| {
+                html! {
+                    <button class={format!("btn {style}")}>
+                        {class_name}
+                    </button>
+                }
+            })
+            .collect();
 
         html! {
             <div class={"flex justify-center"}>
                 <div class={"grid grid-cols-5 gap-6"}>
-                    {for buttons}
+                    {for class_buttons}
                 </div>
             </div>
         }
     };
 
-    let data = include_str!("data.yaml");
-    let classes: HashMap<String, Vec<Job>> = serde_yaml::from_str(data).unwrap();
-    let mut warrior_cards = vec![];
+    let class_data = include_str!("class_data.yaml");
+    let classes: HashMap<String, Vec<Job>> = serde_yaml::from_str(class_data).unwrap();
+    let mut job_cards_map = HashMap::new();
 
-    for job in &classes["전사"] {
-        let card = generate_job_card(&job.name, &job.src);
-        warrior_cards.push(card);
+    for (class, jobs) in &classes {
+        let mut job_cards = vec![];
+
+        for job in jobs {
+            let job_card = generate_job_card(&job.name, &job.src);
+            job_cards.push(job_card);
+        }
+
+        job_cards_map.insert(class, job_cards);
     }
 
-    let card_container: Html = html! {
+    let job_card_container: Html = html! {
         <div class={"flex justify-center"}>
             <div class={"grid grid-cols-5 gap-4"}>
-                {for warrior_cards}
+                {for job_cards_map[&"전사".to_string()].clone()}
             </div>
         </div>
     };
@@ -88,7 +114,7 @@ fn App() -> Html {
     html! {
         <div class={"mt-4 grid grid-cols-1 gap-4"}>
             {class_button_container}
-            {card_container}
+            {job_card_container}
         </div>
     }
 }
