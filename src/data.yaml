@@ -1,0 +1,79 @@
+전사:
+  - name: 히어로
+    src: hero
+    skills:
+      - name: 레이징 블로우
+        src: raging_blow
+        modifier: 분노
+        tag: [VI]
+
+      - name: 파이널 어택
+        src: final_attack
+        modifier: 최후
+        tag: [VI]
+
+      - name: 레이지 업라이징
+        src: rage_uprising
+        modifier: 광분
+        tag: [VI]
+
+      - name: 발할라
+        src: valhalla
+        modifier: 분격
+        tag: [VI]
+
+      - name: 인사이징
+        src: incising
+        modifier: 검격
+        tag: [VI]
+
+      - name: 오라 블레이드
+        src: aura_blade
+        modifier: 균열
+        tag: [VI]
+
+      - name: 플래시 슬래시
+        src: flash_slash
+        modifier: 포스
+
+      - name: 리프 어택/돌진/어퍼 차지
+        src: rush
+        modifier: 진격
+
+      - name: 브랜디쉬
+        src: brandish
+        modifier: 공격
+        tag: [X]
+
+      - name: 브레이브 슬래시
+        src: brave_slash
+        modifier: 용맹
+        tag: [X]
+  - name: 팔라딘
+    src: paladin
+  - name: 다크나이트
+    src: dark_knight
+  - name: 소울마스터
+    src: soul_master
+  - name: 미하일
+    src: mihile
+  - name: 블래스터
+    src: blaster
+  - name: 데몬슬레이어
+    src: demon_slayer
+  - name: 데몬어벤져
+    src: demon_avenger
+  - name: 아란
+    src: aran
+  - name: 카이저
+    src: kaiser
+  - name: 아델
+    src: adele
+  - name: 렌
+    src: len
+  - name: 제로
+    src: zero
+마법사:
+궁수:
+도적:
+해적:
