@@ -40,6 +40,16 @@ impl Class {
             Pirate => "해적",
         }
     }
+
+    fn button_style(&self) -> &str {
+        match self {
+            Warrior => "btn-secondary",
+            Magician => "btn-info",
+            Bowman => "btn-accent",
+            Thief => "btn-primary",
+            Pirate => "btn-neutral",
+        }
+    }
 }
 
 fn generate_job_card(job_name: &str, image_name: &str) -> Html {
@@ -60,20 +70,14 @@ fn generate_job_card(job_name: &str, image_name: &str) -> Html {
 #[function_component]
 fn App() -> Html {
     let class_button_container = {
-        let data = [
-            (Warrior.as_str(), "btn-secondary"),
-            (Magician.as_str(), "btn-info"),
-            (Bowman.as_str(), "btn-accent"),
-            (Thief.as_str(), "btn-primary"),
-            (Pirate.as_str(), "btn-neutral"),
-        ];
+        let classes = [Warrior, Magician, Bowman, Thief, Pirate];
 
-        let class_buttons: Vec<Html> = data
+        let class_buttons: Vec<Html> = classes
             .into_iter()
-            .map(|(class_name, style)| {
+            .map(|class| {
                 html! {
-                    <button class={format!("btn {style}")}>
-                        {class_name}
+                    <button class={format!("btn {}", class.button_style())}>
+                        {class.as_str()}
                     </button>
                 }
             })
