@@ -22,6 +22,7 @@ struct Job {
     skills: Option<Vec<Skill>>,
 }
 
+#[derive(Deserialize, Eq, PartialEq, Hash, Clone)]
 enum Class {
     Warrior,
     Magician,
@@ -75,8 +76,10 @@ fn App() -> Html {
         let class_buttons: Vec<Html> = classes
             .into_iter()
             .map(|class| {
+                let styles = format!("btn {}", class.button_style());
+
                 html! {
-                    <button class={format!("btn {}", class.button_style())}>
+                    <button class={styles}>
                         {class.as_str()}
                     </button>
                 }
@@ -93,10 +96,10 @@ fn App() -> Html {
     };
 
     let class_data = include_str!("class_data.yaml");
-    let classes: HashMap<String, Vec<Job>> = serde_yaml::from_str(class_data).unwrap();
-    let mut job_cards_map = HashMap::new();
+    let classes: HashMap<Class, Vec<Job>> = serde_yaml::from_str(class_data).unwrap();
+    let mut job_cards_map = HashMap::<Class, Vec<Html>>::new();
 
-    for (class, jobs) in &classes {
+    for (class, jobs) in classes.iter() {
         let mut job_cards = vec![];
 
         for job in jobs {
@@ -104,13 +107,13 @@ fn App() -> Html {
             job_cards.push(job_card);
         }
 
-        job_cards_map.insert(class, job_cards);
+        job_cards_map.insert(class.clone(), job_cards);
     }
 
     let job_card_container: Html = html! {
         <div class={"flex justify-center"}>
             <div class={"grid grid-cols-5 gap-4"}>
-                {for job_cards_map[&"전사".to_string()].clone()}
+                {for job_cards_map[&Warrior].clone()}
             </div>
         </div>
     };

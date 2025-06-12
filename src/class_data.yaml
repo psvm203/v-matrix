@@ -1,4 +1,4 @@
-전사:
+Warrior:
   - name: 히어로
     src: hero
     skills:
@@ -73,7 +73,7 @@
     src: len
   - name: 제로
     src: zero
-마법사:
+Magician:
   - name: 아크메이지(불,독)
     src: fire_poison
   - name: 아크메이지(썬,콜)
@@ -94,7 +94,7 @@
     src: lara
   - name: 키네시스
     src: kinesis
-궁수:
+Bowman:
   - name: 보우마스터
     src: bowmaster
   - name: 신궁
@@ -109,7 +109,7 @@
     src: mercedes
   - name: 카인
     src: kain
-도적:
+Thief:
   - name: 나이트로드
     src: night_lord
   - name: 섀도어
@@ -128,7 +128,7 @@
     src: khali
   - name: 호영
     src: ho_young
-해적:
+Pirate:
   - name: 바이퍼
     src: viper
   - name: 캡틴
