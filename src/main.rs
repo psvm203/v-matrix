@@ -72,6 +72,82 @@ fn generate_job_card(job_name: &str, image_name: &str) -> Html {
 
 #[function_component]
 fn App() -> Html {
+    let theme_controller_container = {
+        html! {
+            <div class={"dropdown mb-72"}>
+              <div tabindex={"0"} role={"button"} class={"btn m-1"}>
+                {"테마"}
+                <svg
+                  width={"12px"}
+                  height={"12px"}
+                  class={"inline-block h-2 w-2 fill-current opacity-60"}
+                  xmlns={"http://www.w3.org/2000/svg"}
+                  viewBox={"0 0 2048 2048"}>
+                  <path d={"M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"}></path>
+                </svg>
+              </div>
+              <ul tabindex={"0"} class={"dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl"}>
+                <li>
+                  <input
+                    type={"radio"}
+                    name={"theme-dropdown"}
+                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
+                    aria-label={"자동"}
+                    value={"default"} />
+                </li>
+                <li>
+                  <input
+                    type={"radio"}
+                    name={"theme-dropdown"}
+                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
+                    aria-label={"라이트"}
+                    value={"light"} />
+                </li>
+                <li>
+                  <input
+                    type={"radio"}
+                    name={"theme-dropdown"}
+                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
+                    aria-label={"다크"}
+                    value={"dark"} />
+                </li>
+                <li>
+                  <input
+                    type={"radio"}
+                    name={"theme-dropdown"}
+                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
+                    aria-label={"카라멜라떼"}
+                    value={"caramellatte"} />
+                </li>
+                <li>
+                  <input
+                    type={"radio"}
+                    name={"theme-dropdown"}
+                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
+                    aria-label={"발렌타인"}
+                    value={"valentine"} />
+                </li>
+                <li>
+                  <input
+                    type={"radio"}
+                    name={"theme-dropdown"}
+                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
+                    aria-label={"아쿠아"}
+                    value={"aqua"} />
+                </li>
+                <li>
+                  <input
+                    type={"radio"}
+                    name={"theme-dropdown"}
+                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
+                    aria-label={"신스웨이브"}
+                    value={"synthwave"} />
+                </li>
+              </ul>
+            </div>
+        }
+    };
+
     let class_button_container = {
         let class_buttons: Vec<Html> = Class::iter()
             .map(|class| {
@@ -119,6 +195,7 @@ fn App() -> Html {
 
     html! {
         <div class={"mt-4 grid grid-cols-1 gap-4"}>
+            {theme_controller_container}
             {class_button_container}
             {job_card_container}
         </div>
