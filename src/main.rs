@@ -3,6 +3,8 @@ use Class::*;
 use gloo_console::log;
 use serde::Deserialize;
 use std::collections::HashMap;
+use strum::IntoEnumIterator;
+use strum_macros::EnumIter;
 use yew::prelude::*;
 
 #[derive(Deserialize)]
@@ -22,7 +24,7 @@ struct Job {
     skills: Option<Vec<Skill>>,
 }
 
-#[derive(Deserialize, Eq, PartialEq, Hash, Clone)]
+#[derive(Deserialize, Eq, PartialEq, Hash, Clone, EnumIter)]
 enum Class {
     Warrior,
     Magician,
@@ -71,10 +73,7 @@ fn generate_job_card(job_name: &str, image_name: &str) -> Html {
 #[function_component]
 fn App() -> Html {
     let class_button_container = {
-        let classes = [Warrior, Magician, Bowman, Thief, Pirate];
-
-        let class_buttons: Vec<Html> = classes
-            .into_iter()
+        let class_buttons: Vec<Html> = Class::iter()
             .map(|class| {
                 let styles = format!("btn {}", class.button_style());
 
