@@ -99,7 +99,7 @@ fn App() -> Html {
     let classes: HashMap<Class, Vec<Job>> = serde_yaml::from_str(class_data).unwrap();
     let mut job_cards_map = HashMap::<Class, Vec<Html>>::new();
 
-    for (class, jobs) in classes.iter() {
+    for (class, jobs) in &classes {
         let mut job_cards = vec![];
 
         for job in jobs {
