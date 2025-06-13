@@ -65,7 +65,7 @@ enum Class {
 }
 
 impl Class {
-    fn as_str(&self) -> &str {
+    fn as_str(&self) -> String {
         match self {
             Warrior => "전사",
             Magician => "마법사",
@@ -73,9 +73,10 @@ impl Class {
             Thief => "도적",
             Pirate => "해적",
         }
+        .to_owned()
     }
 
-    fn button_style(&self) -> &str {
+    fn button_style(&self) -> String {
         match self {
             Warrior => "btn-secondary",
             Magician => "btn-info",
@@ -83,6 +84,7 @@ impl Class {
             Thief => "btn-primary",
             Pirate => "btn-neutral",
         }
+        .to_owned()
     }
 }
 
@@ -100,7 +102,7 @@ fn generate_theme_controller(value: String, label: String) -> Html {
     }
 }
 
-fn generate_job_card(job_name: &str, image_name: &str) -> Html {
+fn generate_job_card(job_name: String, image_name: String) -> Html {
     let image_source = format!("assets/jobs/{image_name}.png");
 
     html! {
@@ -117,7 +119,7 @@ fn generate_job_card(job_name: &str, image_name: &str) -> Html {
 
 #[function_component]
 fn App() -> Html {
-    let theme_controller_container = {
+    let theme_controller_container: Html = {
         let theme_controllers: Vec<Html> = Theme::iter()
             .map(|theme| generate_theme_controller(theme.as_string(), theme.label()))
             .collect();
@@ -142,7 +144,7 @@ fn App() -> Html {
         }
     };
 
-    let class_button_container = {
+    let class_button_container: Html = {
         let class_buttons: Vec<Html> = Class::iter()
             .map(|class| {
                 let styles = format!("btn {}", class.button_style());
@@ -169,12 +171,10 @@ fn App() -> Html {
     let mut job_cards_map = HashMap::<Class, Vec<Html>>::new();
 
     for (class, jobs) in &classes {
-        let mut job_cards = vec![];
-
-        for job in jobs {
-            let job_card = generate_job_card(&job.name, &job.src);
-            job_cards.push(job_card);
-        }
+        let job_cards: Vec<Html> = jobs
+            .iter()
+            .map(|job| generate_job_card(job.name.clone(), job.src.clone()))
+            .collect();
 
         job_cards_map.insert(class.clone(), job_cards);
     }
