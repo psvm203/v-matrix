@@ -142,7 +142,7 @@ fn App() -> Html {
         })
     };
 
-    let theme_controller_container: Html = {
+    let theme_controller_container = {
         let theme_controllers: Vec<Html> = Theme::iter()
             .map(|theme| {
                 generate_theme_controller(
@@ -174,7 +174,7 @@ fn App() -> Html {
         }
     };
 
-    let class_button_container: Html = {
+    let class_button_container = {
         let class_buttons: Vec<Html> = Class::iter()
             .map(|class| {
                 let styles = format!("btn {}", class.button_style());
@@ -210,7 +210,7 @@ fn App() -> Html {
         .map(|(class, jobs)| (class.clone(), generate_job_cards(jobs)))
         .collect();
 
-    let job_card_container: Html = html! {
+    let job_card_container = html! {
         <div class={"flex justify-center"}>
             <div class={"grid grid-cols-5 gap-4"}>
                 {for job_cards_map[&Warrior].clone()}
