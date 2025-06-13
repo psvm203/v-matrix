@@ -57,7 +57,7 @@ impl Theme {
     }
 }
 
-#[derive(Deserialize, Eq, PartialEq, Hash, Clone, EnumIter)]
+#[derive(Clone, Deserialize, EnumIter, Eq, Hash, PartialEq)]
 enum Class {
     Warrior,
     Magician,
