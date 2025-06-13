@@ -168,16 +168,17 @@ fn App() -> Html {
 
     let class_data = include_str!("class_data.yaml");
     let classes: HashMap<Class, Vec<Job>> = serde_yaml::from_str(class_data).unwrap();
-    let mut job_cards_map = HashMap::<Class, Vec<Html>>::new();
 
-    for (class, jobs) in &classes {
-        let job_cards: Vec<Html> = jobs
-            .iter()
+    let generate_job_cards = |jobs: &Vec<Job>| -> Vec<Html> {
+        jobs.iter()
             .map(|job| generate_job_card(job.name.clone(), job.src.clone()))
-            .collect();
+            .collect()
+    };
 
-        job_cards_map.insert(class.clone(), job_cards);
-    }
+    let job_cards_map: HashMap<Class, Vec<Html>> = classes
+        .iter()
+        .map(|(class, jobs)| (class.clone(), generate_job_cards(jobs)))
+        .collect();
 
     let job_card_container: Html = html! {
         <div class={"flex justify-center"}>
