@@ -135,7 +135,7 @@ fn App() -> Html {
                   <path d={"M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"}></path>
                 </svg>
               </div>
-              <ul tabindex={"0"} class={"dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl"}>
+              <ul tabindex={"0"} class={"dropdown-content bg-base-300 rounded-box z-1 w-26 p-2 shadow-2xl"}>
                 {for theme_controllers}
               </ul>
             </div>
@@ -188,10 +188,14 @@ fn App() -> Html {
     };
 
     html! {
-        <div class={"mt-4 grid grid-cols-1 gap-4"}>
-            {theme_controller_container}
-            {class_button_container}
-            {job_card_container}
+        <div>
+            <div class={"absolute right-16"}>
+                {theme_controller_container}
+            </div>
+            <div class={"mt-4 grid grid-cols-1 gap-4"}>
+                {class_button_container}
+                {job_card_container}
+            </div>
         </div>
     }
 }
