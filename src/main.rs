@@ -2,10 +2,12 @@ use Class::*;
 use Theme::*;
 #[allow(unused)]
 use gloo_console::log;
+use gloo_storage::{LocalStorage, Storage};
 use serde::Deserialize;
 use std::collections::HashMap;
 use strum::IntoEnumIterator;
 use strum_macros::{AsRefStr, EnumIter};
+use web_sys::{HtmlInputElement, wasm_bindgen::JsCast};
 use yew::prelude::*;
 
 #[derive(Deserialize)]
@@ -25,7 +27,7 @@ struct Job {
     skills: Option<Vec<Skill>>,
 }
 
-#[derive(EnumIter, AsRefStr)]
+#[derive(AsRefStr, EnumIter)]
 enum Theme {
     Default,
     Light,
@@ -88,7 +90,12 @@ impl Class {
     }
 }
 
-fn generate_theme_controller(value: String, label: String) -> Html {
+fn generate_theme_controller(
+    value: String,
+    label: String,
+    initial_theme: String,
+    callback: Callback<Event>,
+) -> Html {
     html! {
         <li>
             <input
@@ -96,7 +103,9 @@ fn generate_theme_controller(value: String, label: String) -> Html {
                 name={"theme-dropdown"}
                 class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
                 aria-label={label}
-                value={value}
+                value={value.clone()}
+                checked={value == initial_theme}
+                onchange={callback}
             />
         </li>
     }
@@ -119,9 +128,30 @@ fn generate_job_card(job_name: String, image_name: String) -> Html {
 
 #[function_component]
 fn App() -> Html {
+    let initial_theme = LocalStorage::get("theme").unwrap_or("default".to_owned());
+    let theme = use_state(|| initial_theme.clone());
+
+    let on_theme_change = {
+        let theme = theme.clone();
+
+        Callback::from(move |event: Event| {
+            let input: HtmlInputElement = event.target().unwrap().dyn_into().unwrap();
+            let new_theme = input.value();
+            theme.set(new_theme.clone());
+            LocalStorage::set("theme", new_theme).unwrap();
+        })
+    };
+
     let theme_controller_container: Html = {
         let theme_controllers: Vec<Html> = Theme::iter()
-            .map(|theme| generate_theme_controller(theme.as_string(), theme.label()))
+            .map(|theme| {
+                generate_theme_controller(
+                    theme.as_string(),
+                    theme.label(),
+                    initial_theme.clone(),
+                    on_theme_change.clone(),
+                )
+            })
             .collect();
 
         html! {

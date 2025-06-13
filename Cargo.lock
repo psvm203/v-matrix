@@ -1058,10 +1058,12 @@ name = "v-matrix"
 version = "0.1.0"
 dependencies = [
  "gloo-console 0.3.0",
+ "gloo-storage 0.3.0",
  "serde",
  "serde_yaml",
  "strum",
  "strum_macros",
+ "web-sys",
  "yew",
 ]
 
