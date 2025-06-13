@@ -1,10 +1,11 @@
 use Class::*;
+use Theme::*;
 #[allow(unused)]
 use gloo_console::log;
 use serde::Deserialize;
 use std::collections::HashMap;
 use strum::IntoEnumIterator;
-use strum_macros::EnumIter;
+use strum_macros::{AsRefStr, EnumIter};
 use yew::prelude::*;
 
 #[derive(Deserialize)]
@@ -22,6 +23,36 @@ struct Job {
     src: String,
     #[allow(unused)]
     skills: Option<Vec<Skill>>,
+}
+
+#[derive(EnumIter, AsRefStr)]
+enum Theme {
+    Default,
+    Light,
+    Dark,
+    Caramellatte,
+    Valentine,
+    Aqua,
+    Synthwave,
+}
+
+impl Theme {
+    fn as_string(&self) -> String {
+        self.as_ref().to_lowercase()
+    }
+
+    fn label(&self) -> String {
+        match self {
+            Default => "자동",
+            Light => "라이트",
+            Dark => "다크",
+            Caramellatte => "카라멜라떼",
+            Valentine => "발렌타인",
+            Aqua => "아쿠아",
+            Synthwave => "신스웨이브",
+        }
+        .to_owned()
+    }
 }
 
 #[derive(Deserialize, Eq, PartialEq, Hash, Clone, EnumIter)]
@@ -55,6 +86,20 @@ impl Class {
     }
 }
 
+fn generate_theme_controller(value: String, label: String) -> Html {
+    html! {
+        <li>
+            <input
+                type={"radio"}
+                name={"theme-dropdown"}
+                class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
+                aria-label={label}
+                value={value}
+            />
+        </li>
+    }
+}
+
 fn generate_job_card(job_name: &str, image_name: &str) -> Html {
     let image_source = format!("assets/jobs/{image_name}.png");
 
@@ -73,6 +118,10 @@ fn generate_job_card(job_name: &str, image_name: &str) -> Html {
 #[function_component]
 fn App() -> Html {
     let theme_controller_container = {
+        let theme_controllers: Vec<Html> = Theme::iter()
+            .map(|theme| generate_theme_controller(theme.as_string(), theme.label()))
+            .collect();
+
         html! {
             <div class={"dropdown mb-72"}>
               <div tabindex={"0"} role={"button"} class={"btn m-1"}>
@@ -87,62 +136,7 @@ fn App() -> Html {
                 </svg>
               </div>
               <ul tabindex={"0"} class={"dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl"}>
-                <li>
-                  <input
-                    type={"radio"}
-                    name={"theme-dropdown"}
-                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
-                    aria-label={"자동"}
-                    value={"default"} />
-                </li>
-                <li>
-                  <input
-                    type={"radio"}
-                    name={"theme-dropdown"}
-                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
-                    aria-label={"라이트"}
-                    value={"light"} />
-                </li>
-                <li>
-                  <input
-                    type={"radio"}
-                    name={"theme-dropdown"}
-                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
-                    aria-label={"다크"}
-                    value={"dark"} />
-                </li>
-                <li>
-                  <input
-                    type={"radio"}
-                    name={"theme-dropdown"}
-                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
-                    aria-label={"카라멜라떼"}
-                    value={"caramellatte"} />
-                </li>
-                <li>
-                  <input
-                    type={"radio"}
-                    name={"theme-dropdown"}
-                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
-                    aria-label={"발렌타인"}
-                    value={"valentine"} />
-                </li>
-                <li>
-                  <input
-                    type={"radio"}
-                    name={"theme-dropdown"}
-                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
-                    aria-label={"아쿠아"}
-                    value={"aqua"} />
-                </li>
-                <li>
-                  <input
-                    type={"radio"}
-                    name={"theme-dropdown"}
-                    class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
-                    aria-label={"신스웨이브"}
-                    value={"synthwave"} />
-                </li>
+                {for theme_controllers}
               </ul>
             </div>
         }
