@@ -7,7 +7,7 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use strum::IntoEnumIterator;
 use strum_macros::{AsRefStr, EnumIter};
-use web_sys::{HtmlInputElement, wasm_bindgen::JsCast};
+use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use yew_autoprops::autoprops;
 
@@ -140,7 +140,7 @@ fn App() -> Html {
         let theme = theme.clone();
 
         Callback::from(move |event: Event| {
-            let input: HtmlInputElement = event.target().unwrap().dyn_into().unwrap();
+            let input: HtmlInputElement = event.target_unchecked_into();
             let new_theme = input.value();
             theme.set(new_theme.clone());
             LocalStorage::set("theme", new_theme).unwrap();
