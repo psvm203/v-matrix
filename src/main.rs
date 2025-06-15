@@ -9,6 +9,7 @@ use strum::IntoEnumIterator;
 use strum_macros::{AsRefStr, EnumIter};
 use web_sys::{HtmlInputElement, wasm_bindgen::JsCast};
 use yew::prelude::*;
+use yew_autoprops::autoprops;
 
 #[derive(Deserialize)]
 #[allow(unused)]
@@ -90,10 +91,12 @@ impl Class {
     }
 }
 
-fn generate_theme_controller(
-    value: String,
-    label: String,
-    initial_theme: String,
+#[autoprops]
+#[function_component]
+fn ThemeController(
+    value: &AttrValue,
+    label: &AttrValue,
+    initial_theme: &AttrValue,
     callback: Callback<Event>,
 ) -> Html {
     html! {
@@ -145,12 +148,14 @@ fn App() -> Html {
     let theme_controller_container = {
         let theme_controllers: Vec<Html> = Theme::iter()
             .map(|theme| {
-                generate_theme_controller(
-                    theme.as_string(),
-                    theme.label(),
-                    initial_theme.clone(),
-                    on_theme_change.clone(),
-                )
+                html! {
+                    <ThemeController
+                        value={theme.as_string()}
+                        label={theme.label()}
+                        initial_theme={initial_theme.clone()}
+                        callback={on_theme_change.clone()}
+                    />
+                }
             })
             .collect();
 
