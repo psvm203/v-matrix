@@ -114,7 +114,9 @@ fn ThemeController(
     }
 }
 
-fn generate_job_card(job_name: String, image_name: String) -> Html {
+#[autoprops]
+#[function_component]
+fn JobCard(job_name: &AttrValue, image_name: &AttrValue) -> Html {
     let image_source = format!("assets/jobs/{image_name}.png");
 
     html! {
@@ -206,7 +208,11 @@ fn App() -> Html {
 
     let generate_job_cards = |jobs: &Vec<Job>| -> Vec<Html> {
         jobs.iter()
-            .map(|job| generate_job_card(job.name.clone(), job.src.clone()))
+            .map(|job| {
+                html! {
+                    <JobCard job_name={job.name.clone()} image_name={job.src.clone()} />
+                }
+            })
             .collect()
     };
 
