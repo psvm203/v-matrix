@@ -99,7 +99,7 @@ impl Class {
 fn ThemeController(
     value: &AttrValue,
     label: &AttrValue,
-    initial_theme: &AttrValue,
+    selected_theme: &AttrValue,
     callback: Callback<Event>,
 ) -> Html {
     html! {
@@ -110,7 +110,7 @@ fn ThemeController(
                 class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
                 aria-label={label}
                 value={value.clone()}
-                checked={value == initial_theme}
+                checked={value == selected_theme}
                 onchange={callback}
             />
         </li>
@@ -136,8 +136,8 @@ fn JobCard(job_name: &AttrValue, image_name: &AttrValue) -> Html {
 
 #[function_component]
 fn App() -> Html {
-    let initial_theme = LocalStorage::get("theme").unwrap_or("default".to_owned());
-    let theme = use_state(|| initial_theme.clone());
+    let selected_theme = LocalStorage::get("theme").unwrap_or("default".to_owned());
+    let theme = use_state(|| selected_theme.clone());
 
     let on_theme_change = {
         let theme = theme.clone();
@@ -157,7 +157,7 @@ fn App() -> Html {
                     <ThemeController
                         value={theme.as_string()}
                         label={theme.label()}
-                        initial_theme={initial_theme.clone()}
+                        selected_theme={selected_theme.clone()}
                         callback={on_theme_change.clone()}
                     />
                 }
