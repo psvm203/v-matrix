@@ -143,12 +143,12 @@ fn App() -> Html {
         let on_theme_change = {
             let theme = theme.clone();
 
-            Callback::from(move |event: Event| {
+            move |event: Event| {
                 let input: HtmlInputElement = event.target_unchecked_into();
                 let new_theme = input.value();
                 theme.set(new_theme.clone());
                 LocalStorage::set("theme", new_theme).unwrap();
-            })
+            }
         };
 
         let theme_controllers: Vec<Html> = Theme::iter()
