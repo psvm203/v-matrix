@@ -100,7 +100,7 @@ fn ThemeController(
     value: &AttrValue,
     label: &AttrValue,
     selected_theme: &AttrValue,
-    callback: Callback<Event>,
+    onchange: Callback<Event>,
 ) -> Html {
     html! {
         <li>
@@ -111,7 +111,7 @@ fn ThemeController(
                 aria-label={label}
                 value={value.clone()}
                 checked={value == selected_theme}
-                onchange={callback}
+                {onchange}
             />
         </li>
     }
@@ -120,11 +120,11 @@ fn ThemeController(
 #[autoprops]
 #[function_component]
 fn JobCard(job_name: &AttrValue, image_name: &AttrValue) -> Html {
-    let image_source = format!("assets/jobs/{image_name}.png");
+    let src = format!("assets/jobs/{image_name}.png");
 
     html! {
         <div class={"card w-32 bg-base-200 border-3 items-center rounded-box overflow-hidden shadow-sm"}>
-            <img class={"bg-primary"} src={image_source} />
+            <img class={"bg-primary"} {src} />
             <div class={"card-body"}>
                 <h2 class={"card-title text-sm whitespace-nowrap h-1"}>
                     {job_name}
@@ -153,12 +153,17 @@ fn App() -> Html {
 
         let theme_controllers: Vec<Html> = Theme::iter()
             .map(|theme| {
+                let value = theme.as_string();
+                let label = theme.label();
+                let selected_theme = selected_theme.clone();
+                let onchange = on_theme_change.clone();
+
                 html! {
                     <ThemeController
-                        value={theme.as_string()}
-                        label={theme.label()}
-                        selected_theme={selected_theme.clone()}
-                        callback={on_theme_change.clone()}
+                        {value}
+                        {label}
+                        {selected_theme}
+                        {onchange}
                     />
                 }
             })
@@ -212,10 +217,13 @@ fn App() -> Html {
 
         jobs.iter()
             .map(|job| {
+                let job_name = job.name.clone();
+                let image_name = job.src.clone();
+
                 (
                     job.class.clone(),
                     html! {
-                        <JobCard job_name={job.name.clone()} image_name={job.src.clone()} />
+                        <JobCard {job_name} {image_name} />
                     },
                 )
             })
