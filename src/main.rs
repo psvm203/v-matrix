@@ -5,9 +5,8 @@ use gloo_console::log;
 use gloo_storage::{LocalStorage, Storage};
 use serde::Deserialize;
 use std::collections::HashMap;
-use std::str::FromStr;
 use strum::IntoEnumIterator;
-use strum_macros::{AsRefStr, EnumIter, EnumString};
+use strum_macros::{AsRefStr, EnumIter};
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use yew_autoprops::autoprops;
@@ -25,7 +24,9 @@ struct Skill {
 struct Job {
     name: String,
     src: String,
-    tag: Vec<String>,
+    class: Class,
+    #[allow(unused)]
+    branch: String,
     #[allow(unused)]
     skills: Option<Vec<Skill>>,
 }
@@ -60,7 +61,7 @@ impl Theme {
     }
 }
 
-#[derive(Clone, Deserialize, EnumIter, EnumString, Eq, Hash, PartialEq)]
+#[derive(Clone, Deserialize, EnumIter, Eq, Hash, PartialEq)]
 enum Class {
     Warrior,
     Magician,
@@ -211,9 +212,8 @@ fn App() -> Html {
     let job_cards_map = jobs
         .iter()
         .map(|job| {
-            let class = Class::from_str(&job.tag[0]).unwrap();
             (
-                class,
+                job.class.clone(),
                 html! {
                     <JobCard job_name={job.name.clone()} image_name={job.src.clone()} />
                 },

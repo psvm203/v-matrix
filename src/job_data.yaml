@@ -1,6 +1,7 @@
 - name: 히어로
   src: hero
-  tag: [Warrior, Adventurers]
+  class: Warrior
+  branch: Adventurers
   skills:
     - name: 레이징 블로우
       src: raging_blow
@@ -51,142 +52,189 @@
       tag: [X]
 - name: 팔라딘
   src: paladin
-  tag: [Warrior, Adventurers]
+  class: Warrior
+  branch: Adventurers
 - name: 다크나이트
   src: dark_knight
-  tag: [Warrior, Adventurers]
+  class: Warrior
+  branch: Adventurers
 - name: 소울마스터
   src: soul_master
-  tag: [Warrior, Cygnus]
+  class: Warrior
+  branch: Cygnus
 - name: 미하일
   src: mihile
-  tag: [Warrior, Cygnus]
+  class: Warrior
+  branch: Cygnus
 - name: 블래스터
   src: blaster
-  tag: [Warrior, Resistance]
+  class: Warrior
+  branch: Resistance
 - name: 데몬슬레이어
   src: demon_slayer
-  tag: [Warrior, Resistance]
+  class: Warrior
+  branch: Resistance
 - name: 데몬어벤져
   src: demon_avenger
-  tag: [Warrior, Resistance]
+  class: Warrior
+  branch: Resistance
 - name: 아란
   src: aran
-  tag: [Warrior, Heroes]
+  class: Warrior
+  branch: Heroes
 - name: 카이저
   src: kaiser
-  tag: [Warrior, Nova]
+  class: Warrior
+  branch: Nova
 - name: 아델
   src: adele
-  tag: [Warrior, Lef]
+  class: Warrior
+  branch: Lef
 - name: 렌
   src: len
-  tag: [Warrior, Anima]
+  class: Warrior
+  branch: Anima
 - name: 제로
   src: zero
-  tag: [Warrior, Zero]
+  class: Warrior
+  branch: Zero
 - name: 아크메이지(불,독)
   src: fire_poison
-  tag: [Magician, Adventurers]
+  class: Magician
+  branch: Adventurers
 - name: 아크메이지(썬,콜)
   src: thunder_cold
-  tag: [Magician, Adventurers]
+  class: Magician
+  branch: Adventurers
 - name: 비숍
   src: bishop
-  tag: [Magician, Adventurers]
+  class: Magician
+  branch: Adventurers
 - name: 플레임위자드
   src: flame_wizard
-  tag: [Magician, Cygnus]
+  class: Magician
+  branch: Cygnus
 - name: 배틀메이지
   src: battle_mage
-  tag: [Magician, Resistance]
+  class: Magician
+  branch: Resistance
 - name: 에반
   src: evan
-  tag: [Magician, Heroes]
+  class: Magician
+  branch: Heroes
 - name: 루미너스
   src: luminous
-  tag: [Magician, Heroes]
+  class: Magician
+  branch: Heroes
 - name: 일리움
   src: illium
-  tag: [Magician, Lef]
+  class: Magician
+  branch: Lef
 - name: 라라
   src: lara
-  tag: [Magician, Anima]
+  class: Magician
+  branch: Anima
 - name: 키네시스
   src: kinesis
-  tag: [Magician, Kinesis]
+  class: Magician
+  branch: Kinesis
 - name: 보우마스터
   src: bowmaster
-  tag: [Bowman, Adventurers]
+  class: Bowman
+  branch: Adventurers
 - name: 신궁
   src: marksman
-  tag: [Bowman, Adventurers]
+  class: Bowman
+  branch: Adventurers
 - name: 패스파인더
   src: pathfinder
-  tag: [Bowman, Adventurers]
+  class: Bowman
+  branch: Adventurers
 - name: 윈드브레이커
   src: wind_breaker
-  tag: [Bowman, Cygnus]
+  class: Bowman
+  branch: Cygnus
 - name: 와일드헌터
   src: wild_hunter
-  tag: [Bowman, Resistance]
+  class: Bowman
+  branch: Resistance
 - name: 메르세데스
   src: mercedes
-  tag: [Bowman, Heroes]
+  class: Bowman
+  branch: Heroes
 - name: 카인
   src: kain
-  tag: [Bowman, Nova]
+  class: Bowman
+  branch: Nova
 - name: 나이트로드
   src: night_lord
-  tag: [Thief, Adventurers]
+  class: Thief
+  branch: Adventurers
 - name: 섀도어
   src: shadower
-  tag: [Thief, Adventurers]
+  class: Thief
+  branch: Adventurers
 - name: 듀얼블레이드
   src: dual_blade
-  tag: [Thief, Adventurers]
+  class: Thief
+  branch: Adventurers
 - name: 나이트워커
   src: night_walker
-  tag: [Thief, Cygnus]
+  class: Thief
+  branch: Cygnus
 - name: 제논
   src: xenon
-  tag: [Thief, Resistance]
+  class: Thief
+  branch: Resistance
 - name: 팬텀
   src: phantom
-  tag: [Thief, Heroes]
+  class: Thief
+  branch: Heroes
 - name: 카데나
   src: cadena
-  tag: [Thief, Nova]
+  class: Thief
+  branch: Nova
 - name: 칼리
   src: khali
-  tag: [Thief, Lef]
+  class: Thief
+  branch: Lef
 - name: 호영
   src: ho_young
-  tag: [Thief, Anima]
+  class: Thief
+  branch: Anima
 - name: 바이퍼
   src: viper
-  tag: [Pirate, Adventurers]
+  class: Pirate
+  branch: Adventurers
 - name: 캡틴
   src: captain
-  tag: [Pirate, Adventurers]
+  class: Pirate
+  branch: Adventurers
 - name: 캐논슈터
   src: cannon_shooter
-  tag: [Pirate, Adventurers]
+  class: Pirate
+  branch: Adventurers
 - name: 스트라이커
   src: striker
-  tag: [Pirate, Cygnus]
+  class: Pirate
+  branch: Cygnus
 - name: 메카닉
   src: mechanic
-  tag: [Pirate, Resistance]
+  class: Pirate
+  branch: Resistance
 - name: 제논
   src: xenon
-  tag: [Pirate, Resistance]
+  class: Pirate
+  branch: Resistance
 - name: 은월
   src: eunwol
-  tag: [Pirate, Heroes]
+  class: Pirate
+  branch: Heroes
 - name: 엔젤릭버스터
   src: angelic_buster
-  tag: [Pirate, Nova]
+  class: Pirate
+  branch: Nova
 - name: 아크
   src: ark
-  tag: [Pirate, Lef]
+  class: Pirate
+  branch: Lef
