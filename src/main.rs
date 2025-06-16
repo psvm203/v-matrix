@@ -68,7 +68,7 @@ enum Class {
 }
 
 impl Class {
-    fn as_str(&self) -> String {
+    fn as_string(&self) -> String {
         match self {
             Warrior => "전사",
             Magician => "마법사",
@@ -188,7 +188,7 @@ fn App() -> Html {
 
                 html! {
                     <button class={styles}>
-                        {class.as_str()}
+                        {class.as_string()}
                     </button>
                 }
             })
