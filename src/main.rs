@@ -5,8 +5,9 @@ use gloo_console::log;
 use gloo_storage::{LocalStorage, Storage};
 use serde::Deserialize;
 use std::collections::HashMap;
+use std::str::FromStr;
 use strum::IntoEnumIterator;
-use strum_macros::{AsRefStr, EnumIter};
+use strum_macros::{AsRefStr, EnumIter, EnumString};
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use yew_autoprops::autoprops;
@@ -24,6 +25,7 @@ struct Skill {
 struct Job {
     name: String,
     src: String,
+    tag: Vec<String>,
     #[allow(unused)]
     skills: Option<Vec<Skill>>,
 }
@@ -58,7 +60,7 @@ impl Theme {
     }
 }
 
-#[derive(Clone, Deserialize, EnumIter, Eq, Hash, PartialEq)]
+#[derive(Clone, Deserialize, EnumIter, EnumString, Eq, Hash, PartialEq)]
 enum Class {
     Warrior,
     Magician,
@@ -203,23 +205,24 @@ fn App() -> Html {
         }
     };
 
-    let class_data = include_str!("class_data.yaml");
-    let classes: HashMap<Class, Vec<Job>> = serde_yaml::from_str(class_data).unwrap();
+    let job_data = include_str!("job_data.yaml");
+    let jobs: Vec<Job> = serde_yaml::from_str(job_data).unwrap();
 
-    let generate_job_cards = |jobs: &Vec<Job>| -> Vec<Html> {
-        jobs.iter()
-            .map(|job| {
+    let job_cards_map = jobs
+        .iter()
+        .map(|job| {
+            let class = Class::from_str(&job.tag[0]).unwrap();
+            (
+                class,
                 html! {
                     <JobCard job_name={job.name.clone()} image_name={job.src.clone()} />
-                }
-            })
-            .collect()
-    };
-
-    let job_cards_map: HashMap<Class, Vec<Html>> = classes
-        .iter()
-        .map(|(class, jobs)| (class.clone(), generate_job_cards(jobs)))
-        .collect();
+                },
+            )
+        })
+        .fold(HashMap::new(), |mut map, (class, card)| {
+            map.entry(class).or_insert_with(Vec::new).push(card);
+            map
+        });
 
     let job_card_container = html! {
         <div class={"flex justify-center"}>

@@ -1,0 +1,192 @@
+- name: 히어로
+  src: hero
+  tag: [Warrior, Adventurers]
+  skills:
+    - name: 레이징 블로우
+      src: raging_blow
+      modifier: 분노
+      tag: [VI]
+
+    - name: 파이널 어택
+      src: final_attack
+      modifier: 최후
+      tag: [VI]
+
+    - name: 레이지 업라이징
+      src: rage_uprising
+      modifier: 광분
+      tag: [VI]
+
+    - name: 발할라
+      src: valhalla
+      modifier: 분격
+      tag: [VI]
+
+    - name: 인사이징
+      src: incising
+      modifier: 검격
+      tag: [VI]
+
+    - name: 오라 블레이드
+      src: aura_blade
+      modifier: 균열
+      tag: [VI]
+
+    - name: 플래시 슬래시
+      src: flash_slash
+      modifier: 포스
+
+    - name: 리프 어택/돌진/어퍼 차지
+      src: rush
+      modifier: 진격
+
+    - name: 브랜디쉬
+      src: brandish
+      modifier: 공격
+      tag: [X]
+
+    - name: 브레이브 슬래시
+      src: brave_slash
+      modifier: 용맹
+      tag: [X]
+- name: 팔라딘
+  src: paladin
+  tag: [Warrior, Adventurers]
+- name: 다크나이트
+  src: dark_knight
+  tag: [Warrior, Adventurers]
+- name: 소울마스터
+  src: soul_master
+  tag: [Warrior, Cygnus]
+- name: 미하일
+  src: mihile
+  tag: [Warrior, Cygnus]
+- name: 블래스터
+  src: blaster
+  tag: [Warrior, Resistance]
+- name: 데몬슬레이어
+  src: demon_slayer
+  tag: [Warrior, Resistance]
+- name: 데몬어벤져
+  src: demon_avenger
+  tag: [Warrior, Resistance]
+- name: 아란
+  src: aran
+  tag: [Warrior, Heroes]
+- name: 카이저
+  src: kaiser
+  tag: [Warrior, Nova]
+- name: 아델
+  src: adele
+  tag: [Warrior, Lef]
+- name: 렌
+  src: len
+  tag: [Warrior, Anima]
+- name: 제로
+  src: zero
+  tag: [Warrior, Zero]
+- name: 아크메이지(불,독)
+  src: fire_poison
+  tag: [Magician, Adventurers]
+- name: 아크메이지(썬,콜)
+  src: thunder_cold
+  tag: [Magician, Adventurers]
+- name: 비숍
+  src: bishop
+  tag: [Magician, Adventurers]
+- name: 플레임위자드
+  src: flame_wizard
+  tag: [Magician, Cygnus]
+- name: 배틀메이지
+  src: battle_mage
+  tag: [Magician, Resistance]
+- name: 에반
+  src: evan
+  tag: [Magician, Heroes]
+- name: 루미너스
+  src: luminous
+  tag: [Magician, Heroes]
+- name: 일리움
+  src: illium
+  tag: [Magician, Lef]
+- name: 라라
+  src: lara
+  tag: [Magician, Anima]
+- name: 키네시스
+  src: kinesis
+  tag: [Magician, Kinesis]
+- name: 보우마스터
+  src: bowmaster
+  tag: [Bowman, Adventurers]
+- name: 신궁
+  src: marksman
+  tag: [Bowman, Adventurers]
+- name: 패스파인더
+  src: pathfinder
+  tag: [Bowman, Adventurers]
+- name: 윈드브레이커
+  src: wind_breaker
+  tag: [Bowman, Cygnus]
+- name: 와일드헌터
+  src: wild_hunter
+  tag: [Bowman, Resistance]
+- name: 메르세데스
+  src: mercedes
+  tag: [Bowman, Heroes]
+- name: 카인
+  src: kain
+  tag: [Bowman, Nova]
+- name: 나이트로드
+  src: night_lord
+  tag: [Thief, Adventurers]
+- name: 섀도어
+  src: shadower
+  tag: [Thief, Adventurers]
+- name: 듀얼블레이드
+  src: dual_blade
+  tag: [Thief, Adventurers]
+- name: 나이트워커
+  src: night_walker
+  tag: [Thief, Cygnus]
+- name: 제논
+  src: xenon
+  tag: [Thief, Resistance]
+- name: 팬텀
+  src: phantom
+  tag: [Thief, Heroes]
+- name: 카데나
+  src: cadena
+  tag: [Thief, Nova]
+- name: 칼리
+  src: khali
+  tag: [Thief, Lef]
+- name: 호영
+  src: ho_young
+  tag: [Thief, Anima]
+- name: 바이퍼
+  src: viper
+  tag: [Pirate, Adventurers]
+- name: 캡틴
+  src: captain
+  tag: [Pirate, Adventurers]
+- name: 캐논슈터
+  src: cannon_shooter
+  tag: [Pirate, Adventurers]
+- name: 스트라이커
+  src: striker
+  tag: [Pirate, Cygnus]
+- name: 메카닉
+  src: mechanic
+  tag: [Pirate, Resistance]
+- name: 제논
+  src: xenon
+  tag: [Pirate, Resistance]
+- name: 은월
+  src: eunwol
+  tag: [Pirate, Heroes]
+- name: 엔젤릭버스터
+  src: angelic_buster
+  tag: [Pirate, Nova]
+- name: 아크
+  src: ark
+  tag: [Pirate, Lef]
