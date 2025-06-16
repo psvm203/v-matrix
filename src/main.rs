@@ -206,23 +206,24 @@ fn App() -> Html {
         }
     };
 
-    let job_data = include_str!("job_data.yaml");
-    let jobs: Vec<Job> = serde_yaml::from_str(job_data).unwrap();
+    let job_cards_map = {
+        let job_data = include_str!("job_data.yaml");
+        let jobs: Vec<Job> = serde_yaml::from_str(job_data).unwrap();
 
-    let job_cards_map = jobs
-        .iter()
-        .map(|job| {
-            (
-                job.class.clone(),
-                html! {
-                    <JobCard job_name={job.name.clone()} image_name={job.src.clone()} />
-                },
-            )
-        })
-        .fold(HashMap::new(), |mut map, (class, card)| {
-            map.entry(class).or_insert_with(Vec::new).push(card);
-            map
-        });
+        jobs.iter()
+            .map(|job| {
+                (
+                    job.class.clone(),
+                    html! {
+                        <JobCard job_name={job.name.clone()} image_name={job.src.clone()} />
+                    },
+                )
+            })
+            .fold(HashMap::new(), |mut map, (class, card)| {
+                map.entry(class).or_insert_with(Vec::new).push(card);
+                map
+            })
+    };
 
     let job_card_container = html! {
         <div class={"flex justify-center"}>
