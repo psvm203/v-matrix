@@ -5,9 +5,9 @@ use gloo_console::log;
 use gloo_storage::{LocalStorage, Storage};
 use serde::Deserialize;
 use std::collections::HashMap;
+use std::str::FromStr;
 use strum::IntoEnumIterator;
-use strum_macros::{AsRefStr, EnumIter};
-use web_sys::HtmlInputElement;
+use strum_macros::{AsRefStr, EnumIter, EnumString};
 use yew::prelude::*;
 use yew_autoprops::autoprops;
 
@@ -31,7 +31,7 @@ struct Job {
     skills: Option<Vec<Skill>>,
 }
 
-#[derive(AsRefStr, EnumIter)]
+#[derive(AsRefStr, Clone, Copy, EnumIter, EnumString, PartialEq)]
 enum Theme {
     Default,
     Light,
@@ -97,9 +97,9 @@ impl Class {
 #[autoprops]
 #[function_component]
 fn ThemeController(
-    value: &AttrValue,
+    value: &Theme,
     label: &AttrValue,
-    selected_theme: &AttrValue,
+    selected_theme: &Theme,
     onchange: Callback<Event>,
 ) -> Html {
     html! {
@@ -109,7 +109,7 @@ fn ThemeController(
                 name={"theme-dropdown"}
                 class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
                 aria-label={label}
-                value={value.clone()}
+                value={value.as_string()}
                 checked={value == selected_theme}
                 {onchange}
             />
@@ -137,26 +137,24 @@ fn JobCard(job_name: &AttrValue, image_name: &AttrValue) -> Html {
 #[function_component]
 fn App() -> Html {
     let theme_controller_container = {
-        let selected_theme = LocalStorage::get("theme").unwrap_or("default".to_owned());
-        let theme = use_state(|| selected_theme.clone());
-
-        let on_theme_change = {
-            let theme = theme.clone();
-
-            move |event: Event| {
-                let input: HtmlInputElement = event.target_unchecked_into();
-                let new_theme = input.value();
-                theme.set(new_theme.clone());
-                LocalStorage::set("theme", new_theme).unwrap();
-            }
-        };
+        let initial_theme = LocalStorage::get("theme").unwrap_or("Default".to_owned());
+        let initial_theme = Theme::from_str(&initial_theme).unwrap();
+        let theme_handle = use_state(|| initial_theme);
 
         let theme_controllers: Vec<Html> = Theme::iter()
             .map(|theme| {
-                let value = theme.as_string();
+                let value = theme;
                 let label = theme.label();
-                let selected_theme = selected_theme.clone();
-                let onchange = on_theme_change.clone();
+                let selected_theme = *theme_handle.clone();
+
+                let onchange = {
+                    let theme_handle = theme_handle.clone();
+
+                    move |_| {
+                        theme_handle.set(theme);
+                        LocalStorage::set("theme", theme.as_ref()).unwrap();
+                    }
+                };
 
                 html! {
                     <ThemeController
