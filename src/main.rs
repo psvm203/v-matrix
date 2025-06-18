@@ -137,8 +137,11 @@ fn JobCard(job_name: &AttrValue, image_name: &AttrValue) -> Html {
 #[function_component]
 fn App() -> Html {
     let theme_controller_container = {
-        let initial_theme = LocalStorage::get("theme").unwrap_or("Default".to_owned());
-        let initial_theme = Theme::from_str(&initial_theme).unwrap();
+        let initial_theme = LocalStorage::get::<String>("theme")
+            .ok()
+            .and_then(|s| Theme::from_str(&s).ok())
+            .unwrap_or(Default);
+
         let theme_handle = use_state(|| initial_theme);
 
         let theme_controllers: Vec<Html> = Theme::iter()
@@ -152,7 +155,7 @@ fn App() -> Html {
 
                     move |_| {
                         theme_handle.set(theme);
-                        LocalStorage::set("theme", theme.as_ref()).unwrap();
+                        LocalStorage::set("theme", theme.as_string()).unwrap();
                     }
                 };
 
