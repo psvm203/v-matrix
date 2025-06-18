@@ -61,7 +61,7 @@ impl Theme {
     }
 }
 
-#[derive(Clone, Deserialize, EnumIter, Eq, Hash, PartialEq)]
+#[derive(Clone, Copy, Deserialize, EnumIter, Eq, Hash, PartialEq)]
 enum Class {
     Warrior,
     Magician,
@@ -187,13 +187,23 @@ fn App() -> Html {
         }
     };
 
+    let class_handle = use_state(|| Warrior);
+
     let class_button_container = {
         let class_buttons: Vec<Html> = Class::iter()
             .map(|class| {
                 let styles = format!("btn {}", class.button_style());
 
+                let onclick = {
+                    let class_handle = class_handle.clone();
+
+                    move |_| {
+                        class_handle.set(class);
+                    }
+                };
+
                 html! {
-                    <button class={styles}>
+                    <button class={styles} {onclick}>
                         {class.as_string()}
                     </button>
                 }
@@ -231,10 +241,12 @@ fn App() -> Html {
             })
     };
 
+    let class = *class_handle;
+
     let job_card_container = html! {
         <div class={"flex justify-center"}>
             <div class={"grid grid-cols-5 gap-4"}>
-                {for job_cards_map[&Warrior].clone()}
+                {for job_cards_map[&class].clone()}
             </div>
         </div>
     };
