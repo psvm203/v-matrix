@@ -123,11 +123,13 @@ fn JobCard(job_name: &AttrValue, image_name: &AttrValue) -> Html {
     let src = format!("assets/jobs/{image_name}.png");
 
     html! {
-        <div class={"card w-32 bg-base-200 border-3 items-center rounded-box overflow-hidden shadow-sm"}>
+        <div
+            class={"card w-32 bg-base-200 border-3 items-center rounded-box overflow-hidden shadow-sm"}
+        >
             <img class={"bg-primary"} {src} />
             <div class={"card-body"}>
                 <h2 class={"card-title text-sm whitespace-nowrap h-1"}>
-                    {job_name}
+                    { job_name }
                 </h2>
             </div>
         </div>
@@ -159,33 +161,30 @@ fn App() -> Html {
                     }
                 };
 
-                html! {
-                    <ThemeController
-                        {value}
-                        {label}
-                        {selected_theme}
-                        {onchange}
-                    />
-                }
+                html! { <ThemeController {value} {label} {selected_theme} {onchange} /> }
             })
             .collect();
 
         html! {
             <div class={"dropdown mb-72"}>
-              <div tabindex={"0"} role={"button"} class={"btn m-1"}>
-                {"테마"}
-                <svg
-                  width={"12px"}
-                  height={"12px"}
-                  class={"inline-block h-2 w-2 fill-current opacity-60"}
-                  xmlns={"http://www.w3.org/2000/svg"}
-                  viewBox={"0 0 2048 2048"}>
-                  <path d={"M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"}></path>
-                </svg>
-              </div>
-              <ul tabindex={"0"} class={"dropdown-content bg-base-300 rounded-box z-1 w-26 p-2 shadow-2xl"}>
-                {for theme_controllers}
-              </ul>
+                <div tabindex={"0"} role={"button"} class={"btn m-1"}>
+                    { "테마" }
+                    <svg
+                        width={"12px"}
+                        height={"12px"}
+                        class={"inline-block h-2 w-2 fill-current opacity-60"}
+                        xmlns={"http://www.w3.org/2000/svg"}
+                        viewBox={"0 0 2048 2048"}
+                    >
+                        <path d={"M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"} />
+                    </svg>
+                </div>
+                <ul
+                    tabindex={"0"}
+                    class={"dropdown-content bg-base-300 rounded-box z-1 w-26 p-2 shadow-2xl"}
+                >
+                    { for theme_controllers }
+                </ul>
             </div>
         }
     };
@@ -207,7 +206,7 @@ fn App() -> Html {
 
                 html! {
                     <button class={styles} {onclick}>
-                        {class.as_string()}
+                        { class.as_string() }
                     </button>
                 }
             })
@@ -216,7 +215,7 @@ fn App() -> Html {
         html! {
             <div class={"flex justify-center"}>
                 <div class={"grid grid-cols-5 gap-6"}>
-                    {for class_buttons}
+                    { for class_buttons }
                 </div>
             </div>
         }
@@ -231,12 +230,7 @@ fn App() -> Html {
                 let job_name = job.name.clone();
                 let image_name = job.src.clone();
 
-                (
-                    job.class.clone(),
-                    html! {
-                        <JobCard {job_name} {image_name} />
-                    },
-                )
+                (job.class.clone(), html! { <JobCard {job_name} {image_name} /> })
             })
             .fold(HashMap::new(), |mut map, (class, card)| {
                 map.entry(class).or_insert_with(Vec::new).push(card);
@@ -249,7 +243,7 @@ fn App() -> Html {
     let job_card_container = html! {
         <div class={"flex justify-center"}>
             <div class={"grid grid-cols-5 gap-4"}>
-                {for job_cards_map[&class].clone()}
+                { for job_cards_map[&class].clone() }
             </div>
         </div>
     };
@@ -257,11 +251,11 @@ fn App() -> Html {
     html! {
         <div>
             <div class={"absolute right-16"}>
-                {theme_controller_container}
+                { theme_controller_container }
             </div>
             <div class={"mt-4 grid grid-cols-1 gap-4"}>
-                {class_button_container}
-                {job_card_container}
+                { class_button_container }
+                { job_card_container }
             </div>
         </div>
     }
