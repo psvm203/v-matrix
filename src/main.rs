@@ -1,13 +1,11 @@
 use Class::*;
-use Theme::*;
 #[allow(unused)]
 use gloo_console::log;
 use gloo_storage::{LocalStorage, Storage};
 use serde::Deserialize;
 use std::collections::HashMap;
-use std::str::FromStr;
 use strum::IntoEnumIterator;
-use strum_macros::{AsRefStr, EnumIter, EnumString};
+use strum_macros::EnumIter;
 use yew::prelude::*;
 use yew_autoprops::autoprops;
 
@@ -29,36 +27,6 @@ struct Job {
     branch: String,
     #[allow(unused)]
     skills: Option<Vec<Skill>>,
-}
-
-#[derive(AsRefStr, Clone, Copy, EnumIter, EnumString, PartialEq)]
-enum Theme {
-    Default,
-    Light,
-    Dark,
-    Caramellatte,
-    Valentine,
-    Aqua,
-    Synthwave,
-}
-
-impl Theme {
-    fn as_string(&self) -> String {
-        self.as_ref().to_lowercase()
-    }
-
-    fn label(&self) -> String {
-        match self {
-            Default => "자동",
-            Light => "라이트",
-            Dark => "다크",
-            Caramellatte => "카라멜라떼",
-            Valentine => "발렌타인",
-            Aqua => "아쿠아",
-            Synthwave => "신스웨이브",
-        }
-        .to_owned()
-    }
 }
 
 #[derive(Clone, Copy, Deserialize, EnumIter, Eq, Hash, PartialEq)]
@@ -96,29 +64,6 @@ impl Class {
 
 #[autoprops]
 #[function_component]
-fn ThemeController(
-    value: &Theme,
-    label: &AttrValue,
-    selected_theme: &Theme,
-    onchange: Callback<Event>,
-) -> Html {
-    html! {
-        <li>
-            <input
-                type={"radio"}
-                name={"theme-dropdown"}
-                class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
-                aria-label={label}
-                value={value.as_string()}
-                checked={value == selected_theme}
-                {onchange}
-            />
-        </li>
-    }
-}
-
-#[autoprops]
-#[function_component]
 fn JobCard(job_name: &AttrValue, image_name: &AttrValue) -> Html {
     let src = format!("assets/jobs/{image_name}.png");
 
@@ -138,32 +83,50 @@ fn JobCard(job_name: &AttrValue, image_name: &AttrValue) -> Html {
 
 #[function_component]
 fn App() -> Html {
-    let theme_controller_container = {
-        let initial_theme = LocalStorage::get::<String>("theme")
-            .ok()
-            .and_then(|s| Theme::from_str(&s).ok())
-            .unwrap_or(Default);
+    let theme_controller = {
+        const THEME_STORAGE_KEY: &str = "theme";
+        const THEME_DEFAULT_VALUE: &str = "default";
 
-        let theme_handle = use_state(|| initial_theme);
+        #[derive(Clone, Deserialize)]
+        struct Theme {
+            value: String,
+            name: String,
+        }
 
-        let theme_controllers: Vec<Html> = Theme::iter()
-            .map(|theme| {
-                let value = theme;
-                let label = theme.label();
-                let selected_theme = *theme_handle.clone();
+        let initial_theme = LocalStorage::get::<String>(THEME_STORAGE_KEY)
+            .unwrap_or(THEME_DEFAULT_VALUE.to_owned());
 
-                let onchange = {
-                    let theme_handle = theme_handle.clone();
+        let theme_state = use_state(|| initial_theme);
 
-                    move |_| {
-                        theme_handle.set(theme);
-                        LocalStorage::set("theme", theme.as_string()).unwrap();
-                    }
-                };
+        let theme_item = |theme: &Theme| -> Html {
+            let on_theme_change = {
+                let theme_state = theme_state.clone();
+                let theme_value = theme.value.clone();
 
-                html! { <ThemeController {value} {label} {selected_theme} {onchange} /> }
-            })
-            .collect();
+                move |_: Event| {
+                    theme_state.set(theme_value.clone());
+                    LocalStorage::set(THEME_STORAGE_KEY, theme_value.clone()).unwrap();
+                }
+            };
+
+            html! {
+                <li key={theme.value.clone()}>
+                    <input
+                        type={"radio"}
+                        name={"theme-dropdown"}
+                        class={"theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"}
+                        aria-label={theme.name.clone()}
+                        value={theme.value.clone()}
+                        checked={theme.value == *theme_state.clone()}
+                        onchange={on_theme_change}
+                    />
+                </li>
+            }
+        };
+
+        let theme_data = include_str!("theme.yaml");
+        let themes: Vec<Theme> = serde_yaml::from_str(theme_data).unwrap();
+        let theme_items: Html = themes.into_iter().map(|theme| theme_item(&theme)).collect();
 
         html! {
             <div class={"dropdown mb-72"}>
@@ -181,9 +144,9 @@ fn App() -> Html {
                 </div>
                 <ul
                     tabindex={"0"}
-                    class={"dropdown-content bg-base-300 rounded-box z-1 w-26 p-2 shadow-2xl"}
+                    class={"dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl"}
                 >
-                    { for theme_controllers }
+                    { theme_items }
                 </ul>
             </div>
         }
@@ -251,7 +214,7 @@ fn App() -> Html {
     html! {
         <div>
             <div class={"absolute right-16"}>
-                { theme_controller_container }
+                { theme_controller }
             </div>
             <div class={"mt-4 grid grid-cols-1 gap-4"}>
                 { class_button_container }
